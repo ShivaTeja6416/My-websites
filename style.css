@@ -1,0 +1,143 @@
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #222;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    transition: background 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+#darkModeToggle {
+    padding: 8px 15px;
+    background: #444;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#darkModeToggle:hover {
+    background: #666;
+}
+
+/* Sections */
+section {
+    padding: 80px 20px;
+    max-width: 900px;
+    margin: auto;
+}
+
+h2 {
+    font-size: 28px;
+    color: #444;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    color: white;
+    padding: 100px 20px;
+    border-radius: 10px;
+    margin-top: 60px;
+}
+
+.hero h2 {
+    font-size: 36px;
+}
+
+/* Projects Section */
+.project-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.project {
+    background: #ffffff;
+    color: #333;
+    padding: 20px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+    width: 200px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.project:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* About & Contact */
+.about, .contact {
+    background: #eee;
+    padding: 50px 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+/* Back to Top Button */
+#backToTop {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background: #6a11cb;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#backToTop:hover {
+    background: #2575fc;
+}
+
+/* Dark Mode */
+.dark-mode {
+    background: #222 !important;
+    color: white !important;
+}
+
+.dark-mode header {
+    background: #000;
+}
+
+.dark-mode .project {
+    background: #333;
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+}
+
+.dark-mode .about, .dark-mode .contact {
+    background: #444;
+}
