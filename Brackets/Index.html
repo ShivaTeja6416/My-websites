@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bracket Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f0f0f0;
+    }
+
+    .container {
+      padding: 30px;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      background-color: #fff;
+      text-align: center;
+      width: 400px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    input {
+      padding: 14px;
+      font-size: 20px;
+      width: 300px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    input::placeholder {
+      color: grey;
+      font-style: italic;
+    }
+
+    input::-webkit-inner-spin-button,
+    input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .arrows {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .arrow-btn {
+      padding: 2px 8px;
+      font-size: 20px;
+      cursor: pointer;
+      border: 3px solid #100bff;
+      background-color: #007bff;
+      color: white;
+      border-radius: 6px;
+    }
+
+    .arrow-btn:hover {
+      background-color: #0056b3;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 26px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #1e7e34;
+    }
+
+    /* Output box styling */
+    .output-box {
+      position: relative;
+      width: 200px;
+      min-height: 20px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      background: white;
+      text-align: left;
+      margin: 25px auto;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* "Output:" title always visible in the top-left corner */
+    .output-box::before {
+      content: "Output:";
+      position: absolute;
+      top: 5px;
+      left: 10px;
+      font-weight: bold;
+      color: black;
+    }
+
+    /* The actual output text */
+    #resultContent {
+      margin-top: 20px; /* Push content down to avoid overlap with "Output:" */
+      text-align: left; /* Align text to the left */
+      padding-left: 30px; /* Shift content 20px from the left */
+    }
+ 
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bracket Generator</h1>
+    <p>When you enter a number, You'll get all the possible combinations of the same number of BRACKETS which are ordered correctly (Every open bracket has its closed bracket after it's appearance)</p>
+    <input type="text" id="numInput" placeholder="Enter an even number (<20)" />
+    <div class="arrows">
+      <button class="arrow-btn" onclick="changeValue(-1)">⬇</button>
+      <button class="arrow-btn" onclick="changeValue(1)">⬆</button>
+    </div>
+    <button onclick="generateBrackets()">Generate</button>
+    
+    <!-- Output Box -->
+    <div class="output-box">
+      <div id="resultContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const inputBox = document.getElementById("numInput");
+    const resultDiv = document.getElementById("resultContent");
+
+    function changeValue(direction) {
+      let value = parseInt(inputBox.value) || 0;
+      if (value < 0) value = 0;
+      const step = value % 2 === 0 ? 2 : 1;
+      let newValue = value + (direction * step);
+      if (newValue < 0) newValue = 0;
+      inputBox.value = newValue;
+    }
+
+    function generateBrackets() {
+      let n = parseInt(inputBox.value);
+      if (isNaN(n)) {
+        resultDiv.innerHTML = "Enter something at least!";
+        return;
+      }
+      if (n > 18) {
+        resultDiv.innerHTML = "Heavy work on me!!";
+        return;
+      }
+      if (n < 0) {
+        resultDiv.innerHTML = "Nah!! Not a negative number...";
+        return;
+      }
+      if (n % 2 !== 0) {
+        resultDiv.innerHTML = "Nah!! Not an odd number...";
+        return;
+      }
+      if (n === 0) {
+        resultDiv.innerHTML = "Nah!! not a zero...";
+        return;
+      }
+
+      let result = [];
+      generate("", 0, 0, n / 2, result);
+      resultDiv.innerHTML = result.join("<br>");
+    }
+
+    function generate(current, open, close, max, result) {
+      if (current.length === max * 2) {
+        result.push(current);
+        return;
+      }
+      if (open < max) generate(current + "(", open + 1, close, max, result);
+      if (close < open) generate(current + ")", open, close + 1, max, result);
+    }
+  </script>
+</body>
+</html>
