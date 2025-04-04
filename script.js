@@ -25,13 +25,11 @@ let isDarkMode = false;
 
 darkModeBtn.addEventListener("click", function () {
     if (!isDarkMode) {
-        document.body.style.backgroundColor = "#222";
-        document.body.style.color = "#fff";
+        document.body.classList.add("dark-mode");
         darkModeBtn.textContent = "☀ Light Mode";
         isDarkMode = true;
     } else {
-        document.body.style.backgroundColor = "#f4f4f4";
-        document.body.style.color = "#333";
+        document.body.classList.remove("dark-mode");
         darkModeBtn.textContent = "🌙 Dark Mode";
         isDarkMode = false;
     }
