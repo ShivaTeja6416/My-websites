@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bracket Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #f0f0f0;
+    }
+
+    .container {
+      margin-top: -80px;
+      padding: 30px;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      background-color: #fff;
+      text-align: center;
+      width: 400px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    input {
+      padding: 14px;
+      font-size: 20px;
+      width: 180px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    input::-webkit-inner-spin-button,
+    input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .arrows {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .arrow-btn {
+      padding: 6px 12px;
+      font-size: 20px;
+      cursor: pointer;
+      border: 1px solid #007bff;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
+    }
+
+    .arrow-btn:hover {
+      background-color: #0056b3;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #1e7e34;
+    }
+
+    #output {
+      margin-top: 20px;
+      font-size: 16px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bracket Generator</h1>
+    <p>Enter an even number to generate valid bracket sequences:</p>
+    <input type="text" id="numInput" value="0" />
+    <div class="arrows">
+      <button class="arrow-btn" onclick="changeValue(1)">⬆</button>
+      <button class="arrow-btn" onclick="changeValue(-1)">⬇</button>
+    </div>
+    <button onclick="generateBrackets()">Generate</button>
+    <div id="output"></div>
+  </div>
+
+  <script>
+    const inputBox = document.getElementById("numInput");
+
+    function changeValue(direction) {
+      let value = parseInt(inputBox.value) || 0;
+
+      if (value < 0) value = 0;
+
+      const step = value % 2 === 0 ? 2 : 1;
+
+      let newValue = value + (direction * step);
+      if (newValue < 0) newValue = 0;
+
+      inputBox.value = newValue;
+    }
+
+    function generateBrackets() {
+      let n = parseInt(inputBox.value);
+      const outputDiv = document.getElementById("output");
+
+      if (isNaN(n)) {
+        outputDiv.innerHTML = "Enter something at least!";
+        return;
+      }
+
+      if (n > 18) {
+        outputDiv.innerHTML = "Heavy work on me!!";
+        return;
+      }
+
+      if (n < 0) {
+        outputDiv.innerHTML = "Nah!! Not a negative number...";
+        return;
+      }
+
+      if (n % 2 !== 0) {
+        outputDiv.innerHTML = "Nah!! Not an odd number...";
+        return;
+      }
+
+      if (n === 0) {
+        outputDiv.innerHTML = "Nah!! not a zero...";
+        return;
+      }
+
+      let result = [];
+      generate("", 0, 0, n / 2, result);
+      outputDiv.innerHTML = result.join("<br>");
+    }
+
+    function generate(current, open, close, max, result) {
+      if (current.length === max * 2) {
+        result.push(current);
+        return;
+      }
+      if (open < max) generate(current + "(", open + 1, close, max, result);
+      if (close < open) generate(current + ")", open, close + 1, max, result);
+    }
+  </script>
+</body>
+</html>
